@@ -1,6 +1,9 @@
 package cs1302.omega;
 
 import cs1302.game.DemoGame;
+import cs1302.tetris.TetrisGame;
+import cs1302.tetris.TetrisBoard;
+import cs1302.tetris.TetrisBanner;
 
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -8,6 +11,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
@@ -26,26 +30,27 @@ public class OmegaApp extends Application {
     @Override
     public void start(Stage stage) {
 
-        // demonstrate how to load local asset using "file:resources/"
-        Image bannerImage = new Image("file:resources/readme-banner.png");
-        ImageView banner = new ImageView(bannerImage);
-        banner.setPreserveRatio(true);
-        banner.setFitWidth(640);
-
         // some labels to display information
         Label notice = new Label("Modify the starter code to suit your needs.");
         Label instructions
             = new Label("Move left/right with arrow keys; click rectangle to teleport.");
 
         // demo game provided with the starter code
-        DemoGame game = new DemoGame(640, 240);
+        TetrisGame game = new TetrisGame(640, 240);
+        TetrisBoard board = new TetrisBoard(15, 10);
+        TetrisBanner banner = new TetrisBanner();
 
         // setup scene
-        VBox root = new VBox(banner, notice, instructions, game);
-        Scene scene = new Scene(root);
+        BorderPane pane = new BorderPane();
+        pane.setTop(banner);
+        pane.setCenter(board);
+        pane.setLeft(null);
+        pane.setRight(null);
+        //VBox root = new VBox(board);
+        Scene scene = new Scene(pane);
 
-        // setup stage
-        stage.setTitle("OmegaApp!");
+           // setup stage
+        stage.setTitle("Tetris Arcade Game");
         stage.setScene(scene);
         stage.setOnCloseRequest(event -> Platform.exit());
         stage.sizeToScene();
